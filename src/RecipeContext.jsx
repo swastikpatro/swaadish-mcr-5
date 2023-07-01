@@ -6,33 +6,45 @@ const RecipeContext = createContext(null);
 export const useRecipeContext = () => useContext(RecipeContext);
 
 const initialState = {
-  recipeList: recipes,
+  recipeList: JSON.parse(localStorage.getItem('recipes')) ?? recipes,
+};
+
+const addToLocalStorage = (recipes) => {
+  localStorage.setItem('recipes', JSON.stringify(recipes));
 };
 
 const recipeReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_RECIPE': {
+      const recipeList = [...state.recipeList, action.payload];
+      addToLocalStorage(recipeList);
       return {
         ...state,
-        recipeList: [...state.recipeList, action.payload],
+        recipeList,
       };
     }
     case 'DELETE_RECIPE': {
+      const recipeList = state.recipeList.filter(
+        ({ id }) => id !== action.payload
+      );
+      addToLocalStorage(recipeList);
       return {
         ...state,
-        recipeList: state.recipeList.filter(({ id }) => id !== action.payload),
+        recipeList,
       };
     }
     case 'EDIT_RECIPE': {
+      const recipeList = state.recipeList.map((singleRecipe) => {
+        if (singleRecipe.id === action.payload.id) {
+          return action.payload;
+        } else {
+          return singleRecipe;
+        }
+      });
+      addToLocalStorage(recipeList);
       return {
         ...state,
-        recipeList: state.recipeList.map((singleRecipe) => {
-          if (singleRecipe.id === action.payload.id) {
-            return action.payload;
-          } else {
-            return singleRecipe;
-          }
-        }),
+        recipeList,
       };
     }
 
