@@ -1,15 +1,19 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, NavLink } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import SingleRecipePage from './pages/SingleRecipePage';
 import ErrorPage from './pages/ErrorPage';
+import { Navbar } from './components';
 
 const App = () => {
   return (
-    <Routes>
-      <Route path='/' element={<HomePage />} />
-      <Route path='/recipe/:recipeId' element={<SingleRecipePage />} />
-      <Route path='*' element={<ErrorPage />} />
-    </Routes>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/recipe/:recipeId' element={<SingleRecipePage />} />
+        <Route path='*' element={<ErrorPage />} />
+      </Routes>
+    </>
   );
 };
 

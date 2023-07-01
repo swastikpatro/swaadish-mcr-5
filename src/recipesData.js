@@ -1,8 +1,10 @@
 export const recipes = [
   {
-    image: 'path/to/image1.jpg',
+    id: '1',
+    image:
+      'https://www.thecocktaildb.com/images/media/drink/vrwquq1478252802.jpg',
     name: 'Spaghetti Bolognese',
-    cuisineType: 'Italian',
+    cuisine: 'Indian',
     ingredients: [
       'spaghetti',
       'ground beef',
@@ -25,9 +27,11 @@ export const recipes = [
     ],
   },
   {
-    image: 'path/to/image2.jpg',
+    id: '2',
+    image:
+      'https://www.thecocktaildb.com/images/media/drink/qgdu971561574065.jpg',
     name: 'Chicken Tikka Masala',
-    cuisineType: 'Indian',
+    cuisine: 'Indian',
     ingredients: [
       'boneless chicken',
       'plain yogurt',
@@ -51,9 +55,11 @@ export const recipes = [
     ],
   },
   {
-    image: 'path/to/image3.jpg',
+    id: '3',
+    image:
+      'https://www.thecocktaildb.com/images/media/drink/mrz9091589574515.jpg',
     name: 'Caesar Salad',
-    cuisineType: 'American',
+    cuisine: 'American',
     ingredients: [
       'romaine lettuce',
       'croutons',
@@ -74,9 +80,11 @@ export const recipes = [
     ],
   },
   {
-    image: 'path/to/image4.jpg',
+    id: '4',
+    image:
+      'https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg',
     name: 'Sushi Rolls',
-    cuisineType: 'Japanese',
+    cuisine: 'Japanese',
     ingredients: [
       'sushi rice',
       'nori seaweed sheets',
@@ -97,9 +105,11 @@ export const recipes = [
     ],
   },
   {
-    image: 'path/to/image5.jpg',
+    id: '5',
+    image:
+      'https://www.thecocktaildb.com/images/media/drink/6ck9yi1589574317.jpg',
     name: 'Guacamole',
-    cuisineType: 'Mexican',
+    cuisine: 'Mexican',
     ingredients: [
       'avocado',
       'lime juice',
