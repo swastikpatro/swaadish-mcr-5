@@ -11,15 +11,25 @@ import {
   Text,
   Link as ChakraLink,
   Spacer,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { useRecipeContext } from '../RecipeContext';
+import AddRecipeModal from './AddRecipeModal';
 const RecipeCard = ({ recipeData }) => {
   const { id, cuisine, name, image } = recipeData;
   const { deleteRecipeDispatch } = useRecipeContext();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Card maxW='sm'>
       <CardBody>
+        {isOpen && (
+          <AddRecipeModal
+            isEditingAndData={recipeData}
+            onClose={onClose}
+            isOpen={isOpen}
+          />
+        )}
         <Image src={image} alt={name} borderRadius='lg' />
         <Stack mt='6' spacing='3'>
           <Heading size='md'>{name}</Heading>
@@ -45,9 +55,9 @@ const RecipeCard = ({ recipeData }) => {
 
       <CardFooter>
         <ButtonGroup spacing='2'>
-          {/* <Button variant='solid' colorScheme='blue'>
+          <Button variant='solid' colorScheme='blue' onClick={onOpen}>
             Edit
-          </Button> */}
+          </Button>
           <Button
             variant='ghost'
             colorScheme='blue'

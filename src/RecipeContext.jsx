@@ -26,6 +26,13 @@ const recipeReducer = (state, action) => {
     case 'EDIT_RECIPE': {
       return {
         ...state,
+        recipeList: state.recipeList.map((singleRecipe) => {
+          if (singleRecipe.id === action.payload.id) {
+            return action.payload;
+          } else {
+            return singleRecipe;
+          }
+        }),
       };
     }
 
@@ -44,9 +51,17 @@ const RecipeContextProvider = ({ children }) => {
   const addRecipeDispatch = ({ recipe }) => {
     dispatch({ type: 'ADD_RECIPE', payload: recipe });
   };
+  const editRecipeDispatch = ({ recipe }) => {
+    dispatch({ type: 'EDIT_RECIPE', payload: recipe });
+  };
   return (
     <RecipeContext.Provider
-      value={{ ...state, deleteRecipeDispatch, addRecipeDispatch }}
+      value={{
+        ...state,
+        deleteRecipeDispatch,
+        addRecipeDispatch,
+        editRecipeDispatch,
+      }}
     >
       {children}
     </RecipeContext.Provider>

@@ -16,15 +16,23 @@ import React, { useState } from 'react';
 import { useRecipeContext } from '../RecipeContext';
 import { v4 as uuid } from 'uuid';
 
-const AddRecipeModal = ({ isAdding, isOpen, onClose }) => {
-  const { addRecipeDispatch } = useRecipeContext();
-  const [inputs, setInputs] = useState({
-    name: '',
-    image: 'https://picsum.photos/200/300',
-    ingredients: '',
-    instructions: '',
-    cuisine: '',
-  });
+const AddRecipeModal = ({ isAdding, isOpen, onClose, isEditingAndData }) => {
+  const { addRecipeDispatch, editRecipeDispatch } = useRecipeContext();
+  const [inputs, setInputs] = useState(
+    isEditingAndData
+      ? {
+          ...isEditingAndData,
+          ingredients: isEditingAndData.ingredients.join(', '),
+          instructions: isEditingAndData.instructions.join(', '),
+        }
+      : {
+          name: '',
+          image: 'https://picsum.photos/200/300',
+          ingredients: '',
+          instructions: '',
+          cuisine: '',
+        }
+  );
 
   const handleChange = (e) =>
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -33,7 +41,10 @@ const AddRecipeModal = ({ isAdding, isOpen, onClose }) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Create your account</ModalHeader>
+        <ModalHeader>
+          {isAdding && 'add'}
+          {isEditingAndData && 'update'} recipe
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl>
@@ -89,19 +100,30 @@ const AddRecipeModal = ({ isAdding, isOpen, onClose }) => {
             colorScheme='blue'
             mr={3}
             onClick={() => {
-              addRecipeDispatch({
-                recipe: {
-                  id: uuid(),
-                  ...inputs,
-                  ingredients: inputs.ingredients.split(','),
-                  instructions: inputs.ingredients.split(','),
-                },
-              });
+              isAdding &&
+                addRecipeDispatch({
+                  recipe: {
+                    id: uuid(),
+                    ...inputs,
+                    ingredients: inputs.ingredients.split(','),
+                    instructions: inputs.ingredients.split(','),
+                  },
+                });
+
+              isEditingAndData &&
+                editRecipeDispatch({
+                  recipe: {
+                    ...inputs,
+                    ingredients: inputs.ingredients.split(','),
+                    instructions: inputs.ingredients.split(','),
+                  },
+                });
 
               onClose();
             }}
           >
             {isAdding && 'add'}
+            {isEditingAndData && 'update'}
           </Button>
           <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
